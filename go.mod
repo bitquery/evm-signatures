@@ -1,4 +1,4 @@
-module github.com/bitquery/evm-disassemble
+module github.com/bitquery/evm-signatures
 
 go 1.22
 

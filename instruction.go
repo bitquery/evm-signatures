@@ -1,4 +1,4 @@
-package disassemble
+package evm_signatures
 
 import (
 	"github.com/ethereum/go-ethereum/core/asm"
