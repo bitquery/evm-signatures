@@ -1,4 +1,4 @@
-package evm_signatures
+package signatures
 
 import (
 	"github.com/ethereum/go-ethereum/core/asm"
@@ -36,8 +36,10 @@ func (i *Instruction) LessOrEqual(op vm.OpCode) bool {
 }
 
 func LoadInstructionsFromBytecode(code []byte) []*Instruction {
-	it := asm.NewInstructionIterator(code)
 	var instructions []*Instruction
+
+	it := asm.NewInstructionIterator(code)
+
 	for it.Next() {
 		instructions = append(instructions, &Instruction{
 			OpCode: it.Op(),
@@ -45,5 +47,6 @@ func LoadInstructionsFromBytecode(code []byte) []*Instruction {
 			PC:     it.PC(),
 		})
 	}
+
 	return instructions
 }

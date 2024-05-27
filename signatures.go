@@ -1,8 +1,13 @@
-package evm_signatures
+package signatures
 
 import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/core/vm"
+)
+
+const (
+	PUSH32DataLength          = 32
+	InstructionSequenceLength = 5
 )
 
 type Signatures struct {
@@ -16,9 +21,10 @@ func FindContractSignatures(code []byte) *Signatures {
 		EventSignatures:    make([]string, 0),
 	}
 
-	lastPush32Value := make([]byte, 0, 32)
+	lastPush32Value := make([]byte, 0, PUSH32DataLength)
 	instructions := LoadInstructionsFromBytecode(code)
-	seq := make([]*Instruction, 0, 5)
+	seq := make([]*Instruction, 0, InstructionSequenceLength)
+
 	for i := 0; i < len(instructions); i++ {
 		inst := instructions[i]
 		if inst.Eq(vm.PUSH32) {
@@ -31,8 +37,9 @@ func FindContractSignatures(code []byte) *Signatures {
 		}
 
 		// take the last 5 instructions and check for function signature
-		j := min(len(instructions), i+5)
+		j := min(len(instructions), i+InstructionSequenceLength)
 		seq = instructions[i:j]
+
 		if sig := findFunctionSignature(seq); sig != "" {
 			result.FunctionSignatures = append(result.FunctionSignatures, sig)
 		}
@@ -42,7 +49,7 @@ func FindContractSignatures(code []byte) *Signatures {
 }
 
 func findFunctionSignature(seq []*Instruction) string {
-	if len(seq) < 5 {
+	if len(seq) < InstructionSequenceLength {
 		return ""
 	}
 
