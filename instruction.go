@@ -35,13 +35,13 @@ func (i *Instruction) LessOrEqual(op vm.OpCode) bool {
 	return i.OpCode <= op
 }
 
-func LoadInstructionsFromBytecode(code []byte) []*Instruction {
-	var instructions []*Instruction
+func LoadInstructionsFromBytecode(code []byte) []Instruction {
+	var instructions []Instruction
 
 	it := asm.NewInstructionIterator(code)
 
 	for it.Next() {
-		instructions = append(instructions, &Instruction{
+		instructions = append(instructions, Instruction{
 			OpCode: it.Op(),
 			Arg:    it.Arg(),
 			PC:     it.PC(),
