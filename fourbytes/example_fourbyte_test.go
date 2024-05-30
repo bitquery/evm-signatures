@@ -21,6 +21,7 @@ func Example() {
 	if err != nil {
 		panic(err)
 	}
+
 	m, err := json.Marshal(res)
 	if err != nil {
 		panic(err)

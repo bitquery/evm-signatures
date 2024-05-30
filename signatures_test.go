@@ -15,7 +15,7 @@ var USDTBytecode []byte
 //go:embed testdata/BAYC.bin
 var BAYCBytecode []byte
 
-func Test_Disassemble(t *testing.T) {
+func Test_FindContractSignatures(t *testing.T) {
 	t.Parallel()
 
 	ERC20DefaultFunctionSignatures := [][]byte{
